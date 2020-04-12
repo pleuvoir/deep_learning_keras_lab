@@ -70,7 +70,7 @@ model = models.Sequential()
 
 # relu是激活函数，类似的还有prelu，elu等，主要作用可以理解为解决只能为线性变换的问题 output = dot(W,input)+b
 # output = dot(W,input)+b ->  output = relu(dot(W,input)+b)
-model.add(layers.Dense(16, activation='relu', input_shape=(10000,))) #这块的形状是怎么回事
+model.add(layers.Dense(16, activation='relu', input_shape=(10000,)))  # 这块的形状是怎么回事
 model.add(layers.Dense(16, activation='relu'))
 model.add(layers.Dense(1, activation='sigmoid'))  # sigmoid 二分类问题概率值 使用此激活函数？
 
@@ -82,7 +82,7 @@ model.compile(optimizer='rmsprop',
 x_val = x_train[:10000]  # 前10000个用作训练验证集
 partial_x_val = x_train[10000:]
 
-print('partial_x_val shape{}'.format(partial_x_val.shape)) # partial_x_val shape(15000, 10000)
+print('partial_x_val shape{}'.format(partial_x_val.shape))  # partial_x_val shape(15000, 10000)
 
 y_val = y_train[:10000]  # 前10000个
 partial_y_val = y_train[10000:]
@@ -94,35 +94,33 @@ results = model.evaluate(x_test, y_test)
 print(results)
 
 history_dict = history.history
-print(history_dict.keys()) #dict_keys(['val_loss', 'val_accuracy', 'loss', 'accuracy'])
+print(history_dict.keys())  # dict_keys(['val_loss', 'val_accuracy', 'loss', 'accuracy'])
 
-loss_values = history_dict['loss'] #训练损失
-val_loss_values = history_dict['val_loss'] #验证损失
-
+loss_values = history_dict['loss']  # 训练损失
+val_loss_values = history_dict['val_loss']  # 验证损失
 
 # 画图验证 epochs 对训练结果的影响
 import matplotlib.pyplot as plt
 
-epochs = range(1,len(loss_values) + 1) # x轴的数据集，训练损失有多少size，则取这个size
+epochs = range(1, len(loss_values) + 1)  # x轴的数据集，训练损失有多少size，则取这个size
 
 # 这是损失的图，可以看出损失在训练集上一直是下降的，但是在验证集上却有上升的情况
-plt.plot(epochs,loss_values,'-',label='loss')
-plt.plot(epochs,val_loss_values,'--',label='val_loss')
-plt.xlabel('epochs',fontsize = 16)
+plt.plot(epochs, loss_values, '-', label='loss')
+plt.plot(epochs, val_loss_values, '--', label='val_loss')
+plt.xlabel('epochs', fontsize=16)
 plt.ylabel('loss')
 plt.title(f'{len(loss_values)} times loss')
 plt.legend()
 plt.show()
 
-plt.clf() # 清空图像
+plt.clf()  # 清空图像
 # 这是精度的图
-accuracy_values = history_dict['accuracy'] #训练精度
-val_accuracy_values = history_dict['val_accuracy'] #验证精度
-plt.plot(epochs,accuracy_values,'-',label='accuracy')
-plt.plot(epochs,val_accuracy_values,'--',label='val_accuracy')
-plt.xlabel('epochs',fontsize = 16)
+accuracy_values = history_dict['accuracy']  # 训练精度
+val_accuracy_values = history_dict['val_accuracy']  # 验证精度
+plt.plot(epochs, accuracy_values, '-', label='accuracy')
+plt.plot(epochs, val_accuracy_values, '--', label='val_accuracy')
+plt.xlabel('epochs', fontsize=16)
 plt.ylabel('loss')
 plt.title(f'{len(loss_values)} times accuracy')
 plt.legend()
 plt.show()
-
